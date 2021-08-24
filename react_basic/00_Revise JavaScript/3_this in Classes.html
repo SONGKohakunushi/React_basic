@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script type="text/javascript" >
+			class Person {
+				constructor(name,age){
+					this.name = name
+					this.age = age
+				}
+				study(){
+					console.log(this);
+				}
+			}
+
+			const p1 = new Person('tom',18)
+			p1.study() //use method of study by the instnace
+			// instance p1 dont have study，but we can find it from prototype
+
+			const x = p1.study  
+			x() // undefined ，Because it is a direct call, unlike the p1.study instance call
+			// All methods defined in the class have strict mode turned on locally
+
+			// bind
+			function demo(){
+				console.log(this);
+			}
+			demo()
+			demo.bind({a:1,b:2})  // .bind  return new function
+			const x = demo.bind({a:1,b:2})
+			x()  // output {a:1,b:2}
+		</script>
+	</body>
+</html>

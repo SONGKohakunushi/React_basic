@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>高阶函数_函数柯里化</title>
+</head>
+<body>
+	<div id="test"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+
+		//#region 
+				/* 
+					A higher-order function is one which either 
+							a) takes a function as an argument or 
+							b) returns a function。
+					Promise、setTimeout、arr.map()
+					new Promise(()=>()) Promise is a built-in function that receives an argument 
+					 
+						function sum(a){
+							return(b)=>{
+								return (c)=>{
+									return a+b+c
+								}
+							}
+						}
+					*/
+		//#endregion
+		
+		class Login extends React.Component{
+			//initialization status
+			state = {
+				username:'', 
+				password:'' 
+			}
+
+	// saveFormData get a argument，saveFormData also is functon and return a function
+			saveFormData = (dataType)=>{
+				return (event)=>{
+					this.setState({[dataType]:event.target.value})
+				}
+			}
+
+	
+			handleSubmit = (event)=>{
+				event.preventDefault() 
+				const {username,password} = this.state
+				alert(`username：${username},password：${password}`)
+			} 
+
+			// onChange={this.saveFormData('username')}
+			// means that the return value of saveFormData is used as the onChange callback.
+			render(){
+				return(
+					<form onSubmit={this.handleSubmit}>
+						username：<input onChange={this.saveFormData('username')} type="text" name="username"/>
+						password：<input onChange={this.saveFormData('password')} type="password" name="password"/>
+						<button>login</button>
+					</form>
+				)
+			}
+		}
+		ReactDOM.render(<Login/>,document.getElementById('test'))
+	</script>
+</body>
+</html>

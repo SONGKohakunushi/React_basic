@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3_react lifecycle(new)</title>
+</head>
+<body>
+	
+	<div id="test"></div>
+	<script type="text/javascript" src="../js/17.0.1/react.development.js"></script>
+	<script type="text/javascript" src="../js/17.0.1/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/17.0.1/babel.min.js"></script>
+
+	<script type="text/babel">
+		
+		class Count extends React.Component{
+			/* 		
+			New lifecycle adds getDerivedStateFromProps getSnapshotBeforeUpdate
+
+				1. Initialization phase: triggered by ReactDOM.render() - initial rendering
+								1. constructor()
+								2. getDerivedStateFromProps 
+								3. render()
+								4. componentDidMount() 
+										This hook is usually used to do some initialization, 
+										e.g. turn on timers, send network requests, subscribe to messages
+				2. update phase: triggered by this.setSate() inside the component or by a re-render of the parent component
+								1. getDerivedStateFromProps
+								2. shouldComponentUpdate()
+								3. render()
+								4. getSnapshotBeforeUpdate
+								5. componentDidUpdate()
+				3. unmountComponent: triggered by ReactDOM.unmountComponentAtNode()
+								1. componentWillUnmount() 
+										Usually this hook is used to do some closing things, 
+										e.g. close timers, unsubscribe from messages
+			*/
+			
+			constructor(props){
+				console.log('Count---constructor');
+				super(props)
+				this.state = {count:0}
+			}
+
+			add = ()=>{
+				const {count} = this.state
+				this.setState({count:count+1})
+			}
+
+			death = ()=>{
+				ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+			}
+
+			force = ()=>{
+				this.forceUpdate()
+			}
+			
+			static getDerivedStateFromProps(props,state){ 
+				console.log('getDerivedStateFromProps',props,state);
+				return null
+			}
+
+			getSnapshotBeforeUpdate(){
+				console.log('getSnapshotBeforeUpdate');
+				return 'atguigu'
+			}
+
+			componentDidMount(){
+				console.log('Count---componentDidMount');
+			}
+
+			componentWillUnmount(){
+				console.log('Count---componentWillUnmount');
+			}
+
+			shouldComponentUpdate(){
+				console.log('Count---shouldComponentUpdate');
+				return true
+			}
+
+			// when the component has been updated Receives three parameters, the last of which is the snapshotValue
+			// return value from getSnapshotBeforeUpdate() 
+			componentDidUpdate(preProps,preState,snapshotValue){
+				console.log('Count---componentDidUpdate',preProps,preState,snapshotValue);
+			}
+			
+			render(){
+				console.log('Count---render');
+				const {count} = this.state
+				return(
+					<div>
+						<h2>sum：{count}</h2>
+						<button onClick={this.add}>click +1</button>
+						<button onClick={this.death}>unmount component</button>
+						<button onClick={this.force}>unchange data，forced update</button>
+					</div>
+				)
+			}
+		}
+		
+		ReactDOM.render(<Count count={199}/>,document.getElementById('test'))
+	</script>
+</body>
+</html>

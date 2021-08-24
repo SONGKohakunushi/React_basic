@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1_callback form of ref</title>
+</head>
+<body>
+	<div id="test"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+	// sometimes string form of ref exist problems
+		
+		class Demo extends React.Component{
+			showData = ()=>{
+				const {input1} = this
+				alert(input1.value)
+			}
+			showData2 = ()=>{
+				const {input2} = this
+				alert(input2.value)
+			}
+
+			render(){
+				return(
+					<div>
+						<input ref={c => this.input1 = c } type="text" placeholder="click on the button to alert date"/>&nbsp;
+						<button onClick={this.showData}>display date from the left input box </button>&nbsp;
+						<input onBlur={this.showData2} ref={c => this.input2 = c } type="text" placeholder="loss of focus alert data"/>&nbsp;
+					</div>
+				)
+			}
+		}
+
+		ReactDOM.render(<Demo a="1" b="2"/>,document.getElementById('test'))
+	</script>
+</body>
+</html>

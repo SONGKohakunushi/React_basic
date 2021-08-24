@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1_Functional component</title>
+</head>
+<body>
+	<div id="test"></div>
+		
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		//1.create functional component
+		function MyComponent(){
+			console.log(this); 
+			// This is undefined here because babel is compiled with strict mode
+			return <h2>im a Functional component</h2>
+		}
+		//2.render component to the page
+		ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+		/* 
+			Can't write MyComponent directly, you have to write it as a tag
+			
+			ReactDOM.render(<MyComponent/>.......) was executed What happens after that?
+					1. React parses the component tag and finds the MyComponent component.
+					2. The component is found to be defined using a function, 
+							and render()  then called to get the virtual DOM.
+							The returned virtual DOM is converted to a real DOM, which is then rendered in the page.
+		*/
+	</script>
+</body>
+</html>

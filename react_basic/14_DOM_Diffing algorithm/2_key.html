@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>key</title>
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+	/*
+      1). What is the internal principle of the key?
+      2). Why is it better not to use index for key when traversing a list?
+      
+			1. The role of keys in the virtual DOM:
+					1). The key is the identifier of the virtual DOM object 
+						and plays an extremely important role in updating the display。
+
+					2). When the data in the state changes, react will generate 
+						a [new virtual DOM] based on the [new data], 
+								  React then performs a diffing comparison of the [new virtual DOM] with the [old virtual DOM], 
+								  		with the following rules of comparison.
+
+									a. The same key as the new virtual DOM was found in the old virtual DOM.
+											(1). If the contents of the virtual DOM remain unchanged, use the previous real DOM directly
+											(2). If the content in the virtual DOM has changed, a new real DOM is generated, 
+														which then replaces the previous real DOM in the page
+
+									b. The same key as the new virtual DOM is not found in the old virtual DOM
+											Create a new real DOM based on the data and subsequently render it to the page
+									
+			2. Problems of using index as a key.
+								1. If the data is added or deleted in reverse order, it will break the order:
+											unnecessary real DOM updates ==> interface is fine, but inefficient。
+
+								2. If the structure also contains a class.
+											An error DOM update will be generated ==> The interface is faulty.
+												
+					
+			3. How to choose the key in the process of development?
+								1. It is best to use a unique identifier for each piece of data as the key, 
+										such as id, mobile phone number, ID number, school number and other unique values.
+								2. If you are sure that you are simply displaying data, it is fine to use index.
+   */
+	
+	class Person extends React.Component{
+
+		state = {
+			persons:[
+				{id:1,name:'小张',age:18},
+				{id:2,name:'小李',age:19},
+			]
+		}
+		
+		add = ()=>{
+			// get the date 
+			const {persons} = this.state
+			// add new data
+			const p = {id:persons.length+1,name:'tom',age:20}
+			// update data
+			this.setState({persons:[p,...persons]})
+		}
+		render(){
+			return (
+				<div>
+					<h2>display information</h2>
+					<button onClick={this.add}>add a tom</button>
+					<h3>use index as key</h3>
+					<ul>
+						{
+							this.state.persons.map((personObj,index)=>{
+								return <li key={index}>{personObj.name}---{personObj.age}<input type="text"/></li>
+							})
+						}
+					</ul>
+
+					<hr/>
+					<hr/>
+					
+					<h3>use id as key</h3>
+					<ul>
+						{
+							this.state.persons.map((personObj)=>{
+								return <li key={personObj.id}>{personObj.name}---{personObj.age}<input type="text"/></li>
+							})
+						}
+					</ul>
+				</div>
+			)
+		}
+	}
+
+	ReactDOM.render(<Person/>,document.getElementById('test'))
+</script>
+</body>
+</html>

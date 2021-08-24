@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>2_controlled component</title>
+</head>
+<body>
+	<div id="test"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+	// controlled component
+	// The DOM of all input classes on the page, which can be maintained into the state as they are entered
+	// When you need it, you can retrieve it directly from the state, which is equivalent to two-way data binding in VUE
+	// Try to use controlled components as much as possible, as it prevents overuse of ref
+
+	class Login extends React.Component{
+
+			//initialization state
+			state = {
+				username:'', 
+				password:'' 
+			}
+
+			//Save username to status
+			saveUsername = (event)=>{
+				this.setState({username:event.target.value})
+			}
+
+			//Save password to status
+			savePassword = (event)=>{
+				this.setState({password:event.target.value})
+			}
+
+			//callback for form submission
+			handleSubmit = (event)=>{
+				event.preventDefault() 
+				const {username,password} = this.state
+				alert(`username: ${username},password：${password}`)
+			}
+			// onChange = {}
+			render(){
+				return(
+					<form onSubmit={this.handleSubmit}>
+						username：<input onChange={this.saveUsername} type="text" name="username"/>
+						password：<input onChange={this.savePassword} type="password" name="password"/>
+						<button>login</button>
+					</form>
+				)
+			}
+		}
+		
+		ReactDOM.render(<Login/>,document.getElementById('test'))
+	</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jsx syntax rules</title>
+	<style>
+		.title{
+			background-color: orange;
+			width: 200px;
+		}
+	</style>
+</head>
+<body>	
+	<div id="test"></div>
+
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel" >
+		const myId = 'aTgUiGu'
+		const myData = 'HeLlo,rEaCt'
+
+		//1.create Virtual DOM
+		// const VDOM = (
+		//    <h2  id ="atguigu">
+		//         <span>hello,react</span>
+		// 	  </h2>
+		//    id = "atguigu" and content of the span, hello,react，
+		//    Define two variables for passing content in the tags
+		// )
+		const VDOM = (                            
+			// 	it's impossible that two elements with the same id, 
+			//  so the first id in the .toLowerCase()  the second id in the .toUpperCase()
+			<div>
+				<h2 className="title" id={myId.toLowerCase()}>
+					<span style={{color:'white',fontSize:'29px'}}>{myData.toLowerCase()}</span>
+				</h2>
+				<h2 className="title" id={myId.toUpperCase()}>  
+					<span style={{color:'white',fontSize:'29px'}}>{myData.toLowerCase()}</span>
+				</h2>
+				<input type="text"/>
+			</div>
+		)
+		//2.render Virtual DOM to the page
+		ReactDOM.render(VDOM,document.getElementById('test'))
+
+	</script>
+</body>
+</html>

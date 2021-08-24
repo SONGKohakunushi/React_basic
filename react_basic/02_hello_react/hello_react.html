@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>hello_react</title>
+</head>
+<body>
+	<!-- container -->
+	<div id="test"></div>
+
+	<!-- core library -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- react-dom library，support React for operating DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- babel，for converting jsx to js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<!-- Scripts -->
+	<script type="text/babel" > /* must have babel */
+		//1.Create a Virtual DOM
+		const VDOM = <h1>Hello,React</h1> /* not to put ''
+											as it's not a string */
+		//2.render the virtual DOM to the page 							
+		ReactDOM.render(VDOM,document.getElementById('test'))
+		// 	render takes two parameters
+		//  The first is the received virtual DOM, the second is the container
+	</script>
+</body>
+</html>

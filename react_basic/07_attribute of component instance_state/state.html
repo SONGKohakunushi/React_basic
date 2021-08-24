@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>state</title>
+</head>
+<body>
+	<!-- container -->
+	<div id="test"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		//1.create class component
+		class Weather extends React.Component{
+			// Initialisation state
+			state = {isHot:false,wind:'gala'}
+
+			render(){
+				const {isHot,wind} = this.state
+				return <h1 onClick={this.changeWeather}>Today the weather is {isHot ? 'hot' : 'cold'}，{wind}</h1>
+			}
+
+			//Custom method 
+			changeWeather = ()=>{
+				const isHot = this.state.isHot
+				this.setState({isHot:!isHot})
+			}
+		}
+		//2.render class component to the page
+		ReactDOM.render(<Weather/>,document.getElementById('test'))
+				
+	</script>
+</body>
+</html>

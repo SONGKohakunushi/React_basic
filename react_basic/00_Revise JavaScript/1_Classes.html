@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1_Classes</title>
+</head>
+<body>
+	<script type="text/javascript" >
+		/* 
+			To summarise.
+				1. The constructor in the class is not mandatory, 
+					it is written only when some initialization operations are performed 
+					on the instance, such as adding specified properties.
+				2. If class A inherits from class B, and the constructor is written in class A, 
+					then the super in the constructor of class A must be called.
+				3. The methods defined in the class are placed on the prototype object of the class for the instance to use.
+
+		*/
+		//create a Person class
+		class Person {
+			//constructor 
+			constructor(name,age){
+				//what is 'this' in the constructor？—— instance of the class
+				this.name = name
+				this.age = age
+			}
+			//general method
+			speak(){
+				//on the prototype object of the class for instance
+				//when calling speak() through a Person instance, 
+				//this in speak is the Person instance
+				console.log(`i'm ${this.name}，age ${this.age}`);
+			}
+		}
+
+		//create Student class，inherit from Person class
+		class Student extends Person {
+			constructor(name,age,grade){
+				super(name,age)
+				this.grade = grade
+				this.school = 'atguigu'
+			}
+			//inherit from the parent class
+			speak(){
+				console.log(`i'm${this.name}，age${this.age},my grade is${this.grade}`);
+				this.study()
+			}
+			study(){
+				console.log('i study hard');
+			}
+		}
+		
+		class Car {
+			constructor(name,price){
+				this.name = name
+				this.price = price
+				// this.wheel = 4
+			}
+			a = 1
+			wheel = 4
+			static demo = 100
+		}
+		const c1 = new Car('benz c63',199)
+		console.log(c1);
+		console.log(Car.demo);
+	</script>
+</body>
+</html>

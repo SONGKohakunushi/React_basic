@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1_introduce lifecycle</title>
+</head>
+<body>
+	<div id="test"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+
+		class Life extends React.Component{
+
+			state = {opacity:1}
+
+			death = ()=>{  
+				// mount    unmount 
+				ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+			}
+
+			// React calls the component automatically, render() mounts the component -> componentDidMount() the component is mounted
+			// -> componentWillUnmount component to be unmounted component's life cycle 
+	 
+			//componente is mounted
+			componentDidMount(){
+				console.log('componentDidMount');
+				// this.timer = setInterval(() 
+				this.timer = setInterval(() => {
+					//get status, cant use const，variable const cant be changed
+					let {opacity} = this.state
+					opacity -= 0.1
+					// if opacity <= 0, opacity = 1   
+					// JavaScript 0.1+0.2 not equal to 0.3
+					// so cant use  ==> opacity ===
+					if(opacity <= 0) opacity = 1  
+					// update opacity ，   {opacity:opacity} ==> {opacity}
+					this.setState({opacity})
+				}, 200);
+			}
+
+			//component will be unmount
+			componentWillUnmount(){
+				//clear interval
+				clearInterval(this.timer)
+			}
+
+
+			render(){
+				console.log('render');
+				return(
+					<div>
+						<h2 style={{opacity:this.state.opacity}}>react is difficult?</h2>
+						<button onClick={this.death}>insist</button>
+					</div>
+				)
+			}
+		}
+		ReactDOM.render(<Life/>,document.getElementById('test'))
+	</script>
+</body>
+</html>

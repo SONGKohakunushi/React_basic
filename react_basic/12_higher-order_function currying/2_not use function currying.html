@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>2_not use function currying</title>
+</head>
+<body>
+	<div id="test"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		
+		class Login extends React.Component{
+			
+			state = {
+				username:'', 
+				password:'' 
+			}
+			// not use implementation of function currying
+			// receive two arguments  dataType,event
+			saveFormData = (dataType,event)=>{
+				this.setState({[dataType]:event.target.value})
+			}
+
+
+			handleSubmit = (event)=>{
+				event.preventDefault() 
+				const {username,password} = this.state
+				alert(`username：${username},password：${password}`)
+			}
+			// onChange={event => this.saveFormData('username',event)}
+			render(){
+				return(
+					<form onSubmit={this.handleSubmit}>
+						username：<input onChange={event => this.saveFormData('username',event) } type="text" name="username"/>
+						password：<input onChange={event => this.saveFormData('password',event) } type="password" name="password"/>
+						<button>login</button>
+					</form>
+				)
+			}
+		}
+		ReactDOM.render(<Login/>,document.getElementById('test'))
+	</script>
+</body>
+</html>

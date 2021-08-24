@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>2_react lifecycle(old)</title>
+</head>
+<body>
+	<div id="test"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		/* 
+				1. initialization phase: triggered by ReactDOM.render() - initial rendering
+									1. constructor()
+									2. componentWillMount()
+									3. render()
+									4. componentDidMount() =====> Commonly used
+													This hook is usually used to do some initialization, e.g. turn on timers, send network requests, subscribe to messages
+				2. update phase: triggered by this.setSate() inside the component or by the parent component render
+									1. shouldComponentUpdate()
+									2. componentWillUpdate()
+									3. render() =====> A mandatory one
+									4. componentDidUpdate()
+				3. unmountComponent: triggered by ReactDOM.unmountComponentAtNode()
+									1. componentWillUnmount() =====> Commonly used
+													Usually this hook is used to do some closing things, e.g. close timers, unsubscribe from messages
+
+		*/
+	
+		class Count extends React.Component{		
+			constructor(props){
+				console.log('Count---constructor');
+				super(props)			
+				this.state = {count:0}
+			}
+		
+			add = ()=>{
+				const {count} = this.state
+				this.setState({count:count+1})
+			}
+
+			death = ()=>{
+				ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+			}
+
+			force = ()=>{
+				this.forceUpdate()
+			}
+
+			componentWillMount(){
+				console.log('Count---componentWillMount');
+			}
+
+			componentDidMount(){
+				console.log('Count---componentDidMount');
+			}
+
+			componentWillUnmount(){
+				console.log('Count---componentWillUnmount');
+			}
+
+			shouldComponentUpdate(){
+				console.log('Count---shouldComponentUpdate');
+				return true
+			}
+
+			componentWillUpdate(){
+				console.log('Count---componentWillUpdate');
+			}
+
+			componentDidUpdate(){
+				console.log('Count---componentDidUpdate');
+			}
+
+			render(){
+				console.log('Count---render');
+				const {count} = this.state
+				return(
+					<div>
+						<h2>sum：{count}</h2>
+						<button onClick={this.add}>click +1</button>
+						<button onClick={this.death}>unmount component,update state</button>
+						<button onClick={this.force}>unchange data，Forced update</button>
+					</div>
+				)
+			}
+		}
+		
+		//parent component A
+		class A extends React.Component{
+			//Initialization status
+			state = {carName:'奔驰'}
+
+			changeCar = ()=>{
+				this.setState({carName:'奥拓'})
+			}
+			// component B display information of car 
+			render(){
+				return(
+					<div>
+						<div>im component A</div>
+						<button onClick={this.changeCar}>change</button>
+						<B carName={this.state.carName}/>
+					</div>
+				)
+			}
+		}
+		// child component B
+		class B extends React.Component{
+			componentWillReceiveProps(props){
+				console.log('B---componentWillReceiveProps',props);
+			}
+
+			shouldComponentUpdate(){
+				console.log('B---shouldComponentUpdate');
+				return true
+			}
+
+			componentWillUpdate(){
+				console.log('B---componentWillUpdate');
+			}
+
+			componentDidUpdate(){
+				console.log('B---componentDidUpdate');
+			}
+
+			render(){
+				console.log('B---render');
+				return(
+					<div>im component B，{this.props.carName}</div>
+				)
+			}
+		}
+		
+		ReactDOM.render(<Count/>,document.getElementById('test'))
+	</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>event handler</title>
+</head>
+<body>
+	<div id="test"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		
+		class Demo extends React.Component{
+			/* 
+			(1). Specify the event handler via the onXxx attribute\
+						a. React uses custom events, not native DOM events ------ compatibility
+						b.Events in React are handled by event delegation 
+							(to the outermost element of the component) -------  efficiency
+			(2). Get the DOM element object where the event occurred via event.target
+															 			------- Don't overuse ref
+			 */
+			
+			myRef = React.createRef()
+
+			showData = (event)=>{
+				console.log(event.target);
+				alert(this.myRef.current.value);
+			}
+
+
+			showData2 = (event)=>{
+				alert(event.target.value);
+			}
+			// The event element and the action element are one and the same, 
+			// the second can be left out ref = {this.myRef2}
+			// When showData2 is called, the event source event is passed in, 
+			// so the call is made directly to event.target.value
+			// So don't overuse ref
+
+			// The first one doesn't work because the button adds the onClick event 
+			// but gets the data from input, so add this.myRef
+			render(){
+				return(
+					<div>
+						<input ref={this.myRef} type="text" placeholder="点击按钮提示数据"/>&nbsp;
+						<button onClick={this.showData}>点我提示左侧的数据</button>&nbsp;
+						<input onBlur={this.showData2} type="text" placeholder="失去焦点提示数据"/>&nbsp;
+					</div>
+				)
+			}
+		}
+		ReactDOM.render(<Demo a="1" b="2"/>,document.getElementById('test'))
+	</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1_uncontrolled component</title>
+</head>
+<body>
+	<div id="test"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+
+		// Use handleSubmit, then take the node, finally get the value of the node
+		class Login extends React.Component{
+			handleSubmit = (event)=>{
+				event.preventDefault() //Block form submissions, preventing page refreshes
+				const {username,password} = this
+				alert(`username：${username.value},password：${password.value}`)
+			}
+			// onSubmit={this.handleSubmit} 响应这次提交
+			// When the form is submitted, it shows the values of the username and password input boxes
+			// can't use event.target，because event.target refer to the form not input
+			// so we need to use ref={c => this.username = c}
+			render(){
+				return(
+					<form onSubmit={this.handleSubmit}>
+						username：<input ref={c => this.username = c} type="text" name="username"/>
+						password：<input ref={c => this.password = c} type="password" name="password"/>
+						<button>login</button>
+					</form>
+				)
+			}
+		}
+		
+		ReactDOM.render(<Login/>,document.getElementById('test'))
+	</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>2_class component</title>
+</head>
+<body>
+	<div id="test"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+
+	//  React.Component
+		//1.create class component
+		class MyComponent extends React.Component {
+			// Constructors can be omitted
+			render(){
+				//render on the prototype object of MyComponent for use by the instance.
+				//what is 'this' in the render？—— Instance objects of MyComponent
+				console.log('render中的this:',this);  // output MyComponent(....)
+				return <h2>im the class component</h2>
+			}
+		}
+		//2.render component to the page
+		ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+
+	</script>
+</body>
+</html>

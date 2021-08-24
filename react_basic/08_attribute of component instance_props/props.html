@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>props</title>
+</head>
+<body>
+	<!-- containers -->
+	<div id="test1"></div>
+	<div id="test2"></div>
+	<div id="test3"></div>
+		
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+	<!-- prop-types，restrictions on component label attributes -->
+	<script type="text/javascript" src="../js/prop-types.js"></script>
+
+	<script type="text/babel">
+
+		// create functional component
+		// All passed tag attributes are collected into props, 
+		// and the function takes the argument props
+		function Person (props){
+			const {name,age,sex} = props
+			return (
+					<ul>
+						<li>name：{name}</li>
+						<li>sex：{sex}</li>
+						<li>age：{age}</li>
+					</ul>
+				)
+		}
+		Person.propTypes = {
+			name:PropTypes.string.isRequired, 
+			sex:PropTypes.string,
+			age:PropTypes.number
+		}
+
+		// default tag attribute value
+		Person.defaultProps = {
+			sex:'man',
+			age:18 
+		}
+		// render functional component to the page
+		ReactDOM.render(<Person name="jerry"/>,document.getElementById('test1'))
+	</script>
+</body>
+</html>

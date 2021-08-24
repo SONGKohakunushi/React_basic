@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1_jsx create Virtual DOM</title>
+</head>
+<body>
+	<div id="test"></div>
+
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel" >
+		//1.create Virtual DOM
+		// h1 contains span tags inside
+		const VDOM = (  
+			<h1 id="title">
+				<span>Hello,React</span>
+			</h1>
+		)
+		//2. render Virtual DOM to the page
+		ReactDOM.render(VDOM,document.getElementById('test'))
+	</script>
+</body>
+</html>

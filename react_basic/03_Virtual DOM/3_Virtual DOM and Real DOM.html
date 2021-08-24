@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3_Virtual DOM and Real DOM</title>
+</head>
+<body>
+	<!-- containers -->
+	<div id="test"></div>
+	<div id="demo"></div>
+
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>	
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel" > 
+		//1.create Virtual DOM
+		const VDOM = (  
+			<h1 id="title">
+				<span>Hello,React</span>
+			</h1>
+		)
+		//2.render Virtual DOM to the page
+		ReactDOM.render(VDOM,document.getElementById('test'))
+
+		// Real DOM
+		const TDOM = document.getElementById('demo')
+		console.log('Virtual DOM',VDOM);
+		console.log('Real DOM',TDOM);
+		debugger;  
+		// console.log(typeof VDOM);  ouput object
+		// console.log(VDOM instanceof Object);
+		/* 
+				About Virtual DOM：
+					1. It is essentially an Object(general object)
+					2. The virtual DOM is "lighter" and the real DOM is "heavier", 
+						because the virtual DOM is used internally by React and does not require as many properties as the real DOM.
+					3. The virtual DOM will eventually be transformed by React into the real DOM and rendered on the page.
+		 */
+	</script>
+</body>
+</html>
